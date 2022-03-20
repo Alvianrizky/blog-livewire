@@ -10,6 +10,12 @@
     background-color: #fff !important;
 }
 
+.btn:hover {
+    background-color: #fff !important;
+    color: #0078ff !important;
+    border-color: #0078ff !important;
+}
+
 .card-blogs {
     width: 280px !important;
     height: 470px !important;

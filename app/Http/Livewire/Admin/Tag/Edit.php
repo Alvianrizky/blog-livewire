@@ -15,6 +15,6 @@ class Edit extends Component
 
     public function render()
     {
-        return view('livewire.admin.tag.edit')->layout('layouts.admin');
+        return view('livewire.admin.tag.edit');
     }
 }

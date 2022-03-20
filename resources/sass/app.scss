@@ -11,6 +11,9 @@
 @import '../assets/css/audio.css';
 // @import '../assets/css/adminlte.css';
 
+@import "node_modules/select2/src/scss/core";
+@import "node_modules/select2-bootstrap-5-theme/src/include-all";
+
 // Custom
 @import "custom";
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';

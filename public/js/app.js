@@ -8703,8 +8703,6 @@ try {
 
   __webpack_require__(/*! select2 */ "./node_modules/select2/dist/js/select2.js");
 
-  $('select').select2();
-
   __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.esm.js");
 } catch (e) {}
 /**

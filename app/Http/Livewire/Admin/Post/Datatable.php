@@ -16,7 +16,22 @@ class Datatable extends DataTableComponent
             Column::make('No', 'id')
                 ->sortable()
                 ->searchable(),
-            Column::make('Nama tag', 'name_tag')
+            Column::make('Judul', 'title')
+                ->sortable()
+                ->searchable(),
+            Column::make('Slug', 'slug')
+                ->sortable()
+                ->searchable(),
+            Column::make('Klik View', 'click_view')
+                ->sortable()
+                ->searchable(),
+            Column::make('Prioritas', 'priority')
+                ->sortable()
+                ->searchable(),
+            Column::make('Status', 'status')
+                ->sortable()
+                ->searchable(),
+            Column::make('Status Aktif', 'flag_aktif')
                 ->sortable()
                 ->searchable(),
             Column::make('Aksi', 'id')

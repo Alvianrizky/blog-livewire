@@ -11,7 +11,7 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('select2');
-    $('select').select2();
+
     require('bootstrap');
 } catch (e) {}
 

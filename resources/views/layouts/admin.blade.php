@@ -8,6 +8,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+
+
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -24,6 +26,15 @@
     <!-- Scripts -->
 
     <script src="{{ mix('js/app.js') }}" defer></script>
+
+    {{-- <script type="text/javascript">
+        $(document).ready(function() {
+            $('select').select2({
+                theme: "bootstrap-5",
+            });
+        });
+
+    </script> --}}
 </head>
 
 <body id="page-top">
@@ -37,33 +48,41 @@
 
     @include('livewire.admin.components.footer')
 
-    @livewireScripts
 
-    <script type="text/javascript" src="{{asset('assets/jquery/jquery.min.js') }}"></script>
+    @livewireScripts
+    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
+        data-turbolinks-eval="false" data-turbo-eval="false"></script>
+
+    {{-- <script type="text/javascript" src="{{asset('assets/jquery/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{asset('assets/counterup/jquery.waypoints.min.js') }}"></script>
-    <script type="text/javascript" src="{{asset('assets/counterup/jquery.counterup.js') }}"></script>
+    <script type="text/javascript" src="{{asset('assets/counterup/jquery.counterup.js') }}"></script> --}}
 
     {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
 
     @stack('modals')
 
 
-    <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
-        data-turbolinks-eval="false" data-turbo-eval="false"></script>
 
-    <script>
+    <script type="text/javascript">
         $(document).ready(function() {
             window.setTimeout(function() {
                 $(".alert").fadeTo(500, 0).slideUp(5000, function(){
                     $(this).remove();
                 });
             }, 5000);
+            $('select').select2({
+                theme: "bootstrap-5",
+            });
         });
     </script>
 
     @stack('scripts')
 
+
+
+
 </body>
+
 
 </html>

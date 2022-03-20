@@ -24,25 +24,29 @@
     <!-- Scripts -->
 
     <script src="{{ mix('js/app.js') }}" defer></script>
+    <script type="text/javascript" src="{{asset('assets/jquery/jquery.min.js') }}"></script>
+    @stack('styles')
 </head>
 
 <body id="page-top">
 
-    <main>
+    @include('livewire.components.header')
+    @include('livewire.components.toast')
+
+    <main class="d-flex flex-column" style="min-height: 70vh !important">
         {{$slot}}
     </main>
 
+    @include('livewire.components.footer')
+
     @livewireScripts
 
-    <script type="text/javascript" src="{{asset('assets/jquery/jquery.min.js') }}"></script>
+
     <script type="text/javascript" src="{{asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{asset('assets/counterup/jquery.waypoints.min.js') }}"></script>
     <script type="text/javascript" src="{{asset('assets/counterup/jquery.counterup.js') }}"></script>
 
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script> --}}
+    {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
 
     @stack('modals')
 
@@ -50,40 +54,19 @@
     <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
         data-turbolinks-eval="false" data-turbo-eval="false"></script>
 
+    <script type="text/javascript">
+        $(document).ready(function() {
+            window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(5000, function(){
+                    $(this).remove();
+                });
+            }, 5000);
 
-    <script>
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            showCloseButton: true,
-            timer: 5000,
-            timerProgressBar:true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
+            $('select').select2({
+                theme: "bootstrap-5",
+            });
         });
-
-        window.addEventListener('alert',({detail:{type,message}})=>{
-            Toast.fire({
-                icon:type,
-                title:message
-            })
-        })
     </script>
-
-
-    {{-- <script>
-    window.addEventListener('alert', event => {
-        toastr[event.detail.type](event.detail.message,
-        event.detail.title ?? ''),
-        toastr.options = {
-            "closeButton": true,
-            "progressBar": true,
-        }
-    });
-    </script> --}}
 
     @stack('scripts')
 

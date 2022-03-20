@@ -120,7 +120,7 @@
                     </div>
                 </div>
 
-                <form enctype="multipart/form-data">
+                <form>
                     @csrf
                     <div class="row">
                         <div class="col-12">
@@ -156,24 +156,17 @@
 
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Foto Thumbnail</label>
-                                <input class="form-control" onchange="readURL(this);" type="file" wire:model.defer="foto">
+                                <input class="form-control" onchange="readURL(this);" type="file">
                                 <img id="blah" src="" class="img-thumbnail mx-auto d-block" style="height: 200px !important; border: none; display: none !important;" alt="">
                             </div>
 
                             <div class="container mb-3 border p-3" style="min-height: 350px;">
                                 <h1 class="mb-4">Content</h1>
 
-                                <div class="row">
-
-                                    @if ($input)
-                                        @foreach ($input as $key => $val)
-                                            @include('livewire.admin.components.deskripsi')
-                                        @endforeach
-                                    @endif
-
+                                <div class="row content">
                                 </div>
 
-
+                                @include('livewire.admin.components.deskripsi')
 
                             </div>
 
@@ -194,23 +187,23 @@
                                     {{-- text image video heading sound --}}
                                     <div class="text-center" style="display: flex;">
                                         <div style="width: 20%;">
-                                            <a class="btn add_deskripsi" wire:click.prevent="add('Text')"><i class="fas fa-font fa-2x"></i><br>Text</a>
+                                            <a class="btn add_deskripsi"><i class="fas fa-font fa-2x"></i><br>Text</a>
                                         </div>
                                         <div style="width: 20%;">
-                                            <a class="btn add_heading" wire:click.prevent="add('Heading')"><i class="fas fa-heading fa-2x"></i><br>Heading</a>
+                                            <a class="btn add_heading"><i class="fas fa-heading fa-2x"></i><br>Heading</a>
                                         </div>
                                         <div style="width: 20%;">
-                                            <a class="btn add_link" wire:click.prevent="add('Link')"><i class="fas fa-link fa-2x"></i><br>Link</a>
+                                            <a class="btn add_link"><i class="fas fa-link fa-2x"></i><br>Link</a>
                                         </div>
                                         <div style="width: 20%;">
-                                            <a class="btn add_image" wire:click.prevent="add('Image')"><i class="fas fa-image fa-2x"></i><br>Image</a>
+                                            <a class="btn add_image"><i class="fas fa-image fa-2x"></i><br>Image</a>
                                         </div>
                                         <div style="width: 20%;">
-                                            <a class="btn add_video" wire:click.prevent="add('Video')"><i class="fab fa-youtube fa-2x"></i><br>Video</a>
+                                            <a class="btn add_video"><i class="fab fa-youtube fa-2x"></i><br>Video</a>
                                         </div>
-                                        {{-- <div style="width: 20%;">
-                                            <a class="btn add_audio" wire:click.prevent="add('Audio')"><i class="fas fa-music fa-2x"></i><br>Sound</a>
-                                        </div> --}}
+                                        <div style="width: 20%;">
+                                            <a class="btn add_audio"><i class="fas fa-music fa-2x"></i><br>Sound</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

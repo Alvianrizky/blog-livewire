@@ -18,7 +18,7 @@ class CreatePostDetailsTable extends Migration
             $table->unsignedBigInteger('posts_id');
             $table->unsignedBigInteger('types_id');
             $table->integer('order');
-            $table->string('contents');
+            $table->longText('contents');
             $table->timestamps();
         });
     }
