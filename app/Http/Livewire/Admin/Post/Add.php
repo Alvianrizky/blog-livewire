@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin\Post;
 use App\Models\Post;
 use App\Models\PostDetail;
 use App\Models\PostType;
+use App\Models\Tag;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -19,11 +20,12 @@ class Add extends Component
     public $page = 'post';
     public $input = [];
     public $deskripsi = [];
-    public $title, $tag, $foto;
+    public $tag = [];
+    public $title, $foto, $tags;
 
     protected $rules = [
         'title' => 'required|unique:posts',
-        // 'tag' => 'required',
+        'tag' => 'required',
     ];
 
     public function render()
@@ -48,6 +50,7 @@ class Add extends Component
 
         // dd($result);
 
+        $this->tags = Tag::orderBy('name_tag', 'ASC')->get();
 
         return view('livewire.admin.post.add');
     }
@@ -55,6 +58,8 @@ class Add extends Component
     public function store()
     {
         $this->validate();
+
+        // dd($this->tag);
 
         $data = [];
         foreach($this->deskripsi as $key => $val) {
@@ -91,37 +96,57 @@ class Add extends Component
             'flag_aktif' => 1,
         ];
 
-        // dd($data);
-
         DB::beginTransaction();
         try {
 
             $postId = Post::create($post);
 
+            if($this->foto) {
+                $this->foto->storeAs($folder, $name);
+            }
+
             if($data) {
+                $result = [];
                 foreach($data as $val) {
 
-                    switch ($val) {
-                        case "red":
-                            echo "Your favorite color is red!";
+                    switch ($val['keys']) {
+                        case "Teks":
+                        case "Heading":
+                        case "Video":
+                            $result[] = [
+                                'posts_id' => $postId->id,
+                                'types_id' => $val['types_id'],
+                                'order' => $val['order'],
+                                'contents' => $val['contents'],
+                            ];
                             break;
-                        case "blue":
-                            echo "Your favorite color is blue!";
+                        case "Link":
+                            $result[] = [
+                                'posts_id' => $postId->id,
+                                'types_id' => $val['types_id'],
+                                'order' => $val['order'],
+                                'contents' => json_encode($val['contents']),
+                            ];
                             break;
-                        case "green":
-                            echo "Your favorite color is green!";
+                        case "Image":
+                            $result[] = [
+                                'posts_id' => $postId->id,
+                                'types_id' => $val['types_id'],
+                                'order' => $val['order'],
+                                'contents' => $val['contents'],
+                            ];
+
+                            $val['file']->storeAs($val['folder'], $val['name']);
                             break;
-                        default:
-                            echo "Your favorite color is neither red, blue, nor green!";
                     }
 
-                    // PostDetail::create($data);
                 }
+                PostDetail::insert($result);
             }
 
             DB::commit();
             session()->flash('success', 'Data Berhasil Disimpan.');
-            return redirect()->route('tag.index');
+            return redirect()->route('post.index');
         } catch (\Exception $e) {
             dd($e);
             DB::rollback();
@@ -156,6 +181,7 @@ class Add extends Component
                     'types_id' => $type->id,
                     'order' => $index + 1,
                     'contents' => $value[$keys],
+                    'keys' => $keys,
                 ];
                 break;
             case "Link":
@@ -166,6 +192,7 @@ class Add extends Component
                         'link' => $value[$keys]['link'],
                         'name' => $value[$keys]['name'],
                     ],
+                    'keys' => $keys,
                 ];
                 break;
             case "Image":
@@ -179,6 +206,7 @@ class Add extends Component
                     'file' => $value[$keys],
                     'folder' => $folder,
                     'name' => $name,
+                    'keys' => $keys,
                 ];
                 break;
         }

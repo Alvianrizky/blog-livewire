@@ -63,6 +63,11 @@
                 $(this).parents(".controll").remove();
             });
 
+            $('select').on('change', function (e) {
+                var data = $('select').select2("val");
+                @this.set('tag', data);
+            });
+
 
 
             // $('#autoresizing').on('input', function () {
@@ -132,14 +137,13 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Tag Postingan</label>
-                                <select class="col-12" multiple="true" wire:model.defer="tag">
-                                    <option value="1">Excellent</option>
-                                    <option value="2">Very Good</option>
-                                    <option value="3">Good</option>
-                                    <option value="4">Not Bad</option>
-                                    <option value="5">Bad</option>
-                                    <option value="6">Very Bad</option>
-                                </select>
+                                <div wire:ignore>
+                                    <select class="col-12" id="select" multiple wire:model.defer="tag">
+                                        @foreach ($tags as $item)
+                                        <option value="{{$item->id}}">{{$item->name_tag}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
 
                             <div class="mb-3">
