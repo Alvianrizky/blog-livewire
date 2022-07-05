@@ -1,5 +1,5 @@
 <div>
-    @push('scripts')
+    {{-- @push('scripts')
     <script>
         /*** Custom Audio Player */
         const audioPlayer = document.querySelectorAll('.voice-assistant-item');
@@ -77,43 +77,59 @@
         });
         }
     </script>
+    @endpush --}}
+
+    @push('meta')
+        <meta name="title" content="{{ $post['title'] }}">
+        <meta name="description" content="{{ $post['meta_desc'] }}">
+        <meta name="keywords" content="{{ $post['meta_keys'] }}">
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="{{ URL::current() }}">
+        <meta property="og:title" content="{{ $post['title'] }}">
+        <meta property="og:description" content="{{ $post['meta_desc'] }}">
+        <meta property="og:image" content="{{ asset('storage/'.$post['thumbnail']) }}">
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="{{ URL::current() }}">
+        <meta property="twitter:title" content="{{ $post['title'] }}">
+        <meta property="twitter:description" content="{{ $post['meta_desc'] }}">
+        <meta property="twitter:image" content="{{ asset('storage/'.$post['thumbnail']) }}">
     @endpush
+
     <div class="row justify-content-center" style="margin-top: 100px !important;">
         <div class="col-sm-11 col-lg-8 border">
             <div class="m-3">
-                <h1>Lorem Ipsum</h1>
+                <h1>{{ $post['title'] }}</h1>
                 <div>
-                    <span class="text-muted">15 Februari 2022</span>
+                    <span class="text-muted">{{ $post['date'] }}</span>
+
                     <div class="my-3 fs-7">
-                        <span class="border rounded p-2" style="line-height:3.4;">Website</span>
-                        <span class="border rounded p-2" style="line-height:3.4;">Teknologi</span>
-                        <span class="border rounded p-2" style="line-height:3.4;">Tutorial</span>
+
+                        @foreach ($postTag as $item)
+                        <span class="border rounded p-2" style="line-height:3.4;">{{ $item->tag->name_tag }}</span>
+                        @endforeach
+
                     </div>
+
                 </div>
 
-                <div class="my-4">
-                    <img src="{{ asset('img/work-1.jpg') }}" class="img-fluid" alt="">
-                </div>
 
+                {{-- thumbnail --}}
+                @if ($post['thumbnail'])
                 <div class="my-4">
-                    <h2>Ini Heading</h2>
+                    <img src="{{ asset('storage/'.$post["thumbnail"]) }}" class="img-fluid rounded mx-auto d-block" alt="">
                 </div>
+                @endif
 
-                <div class="my-4">
-                    <h5 class="text-justify" style="line-height:28px; color: #292929 !important; font-weight: 100 !important;">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</h5>
-                </div>
 
-                <div class="my-4">
-                    <a href="http://" class="btn btn-outline-primary"><i class="fas fa-link"></i> Follow Me</a>
-                </div>
+                @foreach ($postDetail as $val)
 
-                <div class="my-4">
-                    <div class="o-video">
-                        <iframe src="https://www.youtube.com/embed/Kch8n4tcOZQ?&showinfo=0&modestbranding=1&rel=0&autohide=1" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                </div>
+                @include('livewire.blog.components.detail')
 
-                <div class="my-4">
+                @endforeach
+
+                {{-- <div class="my-4">
                     <div class="voice-assistant-item w-clearfix" style="border-radius: 20px !important;">
                         <div class="voice-assistant-item-button">
                             <a class="play-button w-button" data-audio="{{ asset('file/audio.mp3') }}"><em class="italic-text-7 1"></em></a>
@@ -130,7 +146,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
             </div>
         </div>

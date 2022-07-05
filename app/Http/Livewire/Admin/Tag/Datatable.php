@@ -19,6 +19,9 @@ class Datatable extends DataTableComponent
             Column::make('Nama tag', 'name_tag')
                 ->sortable()
                 ->searchable(),
+            Column::make('Keyword', 'keyword')
+                ->sortable()
+                ->searchable(),
             Column::make('Aksi', 'id')
                 ->format(function ($value) {
                 return view('livewire.admin.components.action')->with('data', $value);

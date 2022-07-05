@@ -9,10 +9,11 @@ use Livewire\Component;
 class Add extends Component
 {
     public $page = 'tag';
-    public $nameTag;
+    public $nameTag, $keyword;
 
     protected $rules = [
         'nameTag' => 'required|unique:tags,name_tag',
+        'keyword' => 'required',
     ];
 
     public function render()
@@ -26,6 +27,7 @@ class Add extends Component
 
         $data = [
             'name_tag' => $this->nameTag,
+            'keyword' => $this->keyword,
         ];
 
         DB::beginTransaction();

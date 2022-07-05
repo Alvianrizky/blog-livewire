@@ -25,7 +25,7 @@ use App\Http\Livewire\Admin\Tag\Edit as TagEdit;
 |
 */
 
-Route::get('/', function () {
+Route::get('/c', function () {
     return view('welcome');
 });
 
@@ -34,6 +34,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::prefix('/admin')->group(function () {
+    Route::get('/', AdminHome::class)->name('dashboard');
     Route::get('/dashboard', AdminHome::class)->name('dashboard');
 
     Route::prefix('/post')->group(function () {
@@ -50,6 +51,7 @@ Route::prefix('/admin')->group(function () {
 
 
 
-Route::get('/home', Home::class)->name('home');
-Route::get('/blog', Blog::class)->name('blog');
+// Route::get('/home', Home::class)->name('home');
+Route::get('/', Blog::class)->name('home');
 Route::get('/detail', Detail::class)->name('detail');
+Route::get('/news/{date}/{slug}', Detail::class)->name('detail.blog');

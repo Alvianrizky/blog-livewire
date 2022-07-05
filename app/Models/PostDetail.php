@@ -10,4 +10,9 @@ class PostDetail extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function type()
+    {
+        return $this->belongsTo('App\Models\PostType', 'types_id', 'id');
+    }
 }

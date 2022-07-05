@@ -17,7 +17,8 @@
     </footer>
 </section>
 @else
-<section class="paralax-mf footer-paralax bg-image sect-mt4 route" style="background-image: url(img/overlay-bg.jpg); z-index: -11 !important;">
+{{-- <section class="paralax-mf footer-paralax bg-image sect-mt4 route" style="background-image: url(img/overlay-bg.jpg); z-index: -11 !important;"> --}}
+<section class="paralax-mf footer-paralax bg-image sect-mt4 route" style="background-image: url({{ asset('img/overlay-bg.jpg') }}); z-index: -11 !important;">
     <div class="overlay-mf"></div>
     <div class="row justify-content-center">
         <div class="row text-light col-12 col-xl-10">

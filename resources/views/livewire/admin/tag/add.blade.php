@@ -34,6 +34,11 @@
                                         @error('nameTag') <span class="text-danger">{{ $message }}</span>@enderror
                                     </div>
                                     <div class="mb-3">
+                                        <label class="form-label">Keyword</label>
+                                        <input type="text" class="form-control" placeholder="keyword" id="keyword" name="keyword" wire:model.defer="keyword">
+                                        @error('keyword') <span class="text-danger">{{ $message }}</span>@enderror
+                                    </div>
+                                    <div class="mb-3">
                                         <a href="{{ route('tag.index') }}" class="btn btn-light text-left me-2">Kembali</a>
                                         <button type="button" class="btn bg-index text-light" wire:click.prevent="store">Simpan</button>
                                     </div>

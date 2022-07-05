@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin\Post;
 
 use App\Models\Post;
 use App\Models\PostDetail;
+use App\Models\PostTag;
 use App\Models\PostType;
 use App\Models\Tag;
 use Illuminate\Support\Facades\DB;
@@ -20,8 +21,8 @@ class Add extends Component
     public $page = 'post';
     public $input = [];
     public $deskripsi = [];
-    public $tag = [];
-    public $title, $foto, $tags;
+    public $tagId = [];
+    public $title, $foto, $tags, $metaDesc;
 
     protected $rules = [
         'title' => 'required|unique:posts',
@@ -57,21 +58,28 @@ class Add extends Component
 
     public function store()
     {
-        $this->validate();
+        // $this->validate();
 
-        // dd($this->tag);
+        // dd($this->tagId);
+
+        $keyword = '';
+        if ($this->tagId) {
+            foreach ($this->tagId as $index => $val) {
+                $keys = Tag::find($val);
+
+                if(count($this->tagId) == $index + 1){
+                    $keyword .= "$keys->keyword";
+                } else {
+                    $keyword .= "$keys->keyword, ";
+                }
+            }
+        }
 
         $data = [];
         foreach($this->deskripsi as $key => $val) {
             $keys = array_keys($val);
 
             $data[] = $this->getDeskripsi($keys[0], $val, $key);
-
-            // $data['file']->storeAs($folder, $name);
-            // $data[] = $val[$keys[0]];
-            // dd($keys[0]);
-            // dd($val);
-            // dd($keys[0]);
         }
 
         // $user = Auth::user()->id;
@@ -93,6 +101,8 @@ class Add extends Component
             'click_view' => 0,
             'priority' => 0,
             'status' => 'Publik',
+            'meta_desc' => $this->metaDesc,
+            'meta_keys' => $keyword,
             'flag_aktif' => 1,
         ];
 
@@ -101,8 +111,19 @@ class Add extends Component
 
             $postId = Post::create($post);
 
+            if ($this->tagId) {
+                foreach ($this->tagId as $val) {
+                    $tag = [
+                        'posts_id' => $postId->id,
+                        'tags_id' => $val
+                    ];
+
+                    PostTag::create($tag);
+                }
+            }
+
             if($this->foto) {
-                $this->foto->storeAs($folder, $name);
+                $this->foto->storeAs('public/'.$folder, $name);
             }
 
             if($data) {
@@ -136,7 +157,7 @@ class Add extends Component
                                 'contents' => $val['contents'],
                             ];
 
-                            $val['file']->storeAs($val['folder'], $val['name']);
+                            $val['file']->storeAs('public/'.$val['folder'], $val['name']);
                             break;
                     }
 
@@ -212,5 +233,14 @@ class Add extends Component
         }
 
         return $data;
+    }
+
+    public function select($item)
+    {
+        if ($item) {
+            $this->tagId = Tag::find($item);
+            $this->emit('selected', $this->tagId->id);
+        } else
+            $this->tagId = null;
     }
 }

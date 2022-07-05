@@ -19,9 +19,6 @@ class Datatable extends DataTableComponent
             Column::make('Judul', 'title')
                 ->sortable()
                 ->searchable(),
-            Column::make('Slug', 'slug')
-                ->sortable()
-                ->searchable(),
             Column::make('Klik View', 'click_view')
                 ->sortable()
                 ->searchable(),

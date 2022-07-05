@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @stack('meta')
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -17,6 +18,9 @@
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/animate/animate.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/ionicons/css/ionicons.min.css') }}">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css"> --}}
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
 
 
     @livewireStyles
@@ -25,7 +29,11 @@
 
     <script src="{{ mix('js/app.js') }}" defer></script>
     <script type="text/javascript" src="{{asset('assets/jquery/jquery.min.js') }}"></script>
+
+
+
     @stack('styles')
+
 </head>
 
 <body id="page-top">
@@ -46,6 +54,9 @@
     <script type="text/javascript" src="{{asset('assets/counterup/jquery.waypoints.min.js') }}"></script>
     <script type="text/javascript" src="{{asset('assets/counterup/jquery.counterup.js') }}"></script>
 
+
+
+
     {{-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script> --}}
 
     @stack('modals')
@@ -53,6 +64,10 @@
 
     <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
         data-turbolinks-eval="false" data-turbo-eval="false"></script>
+
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script> --}}
+
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -62,9 +77,10 @@
                 });
             }, 5000);
 
-            $('select').select2({
-                theme: "bootstrap-5",
-            });
+            // $('select').select2({
+            //     theme: "bootstrap-5",
+            // });
+            // $('select').selectpicker();
         });
     </script>
 

@@ -33,6 +33,7 @@
         "tailwindcss": "^3.0.0"
     },
     "dependencies": {
+        "bootstrap-select": "^1.13.18",
         "turbolinks": "^5.2.0"
     }
 }

@@ -1,7 +1,5 @@
 <div>
     @push('styles')
-
-    @endpush
     <style>
         #autoresizing {
             display: block;
@@ -11,7 +9,6 @@
 
         input[type=file]::-webkit-file-upload-button,
         input[type=file]::file-selector-button {
-            /* @apply text-white bg-gray-700 hover:bg-gray-600 font-medium text-sm cursor-pointer border-0 py-2.5 pl-8 pr-4; */
             margin-inline-start: -12px;
             margin-inline-end: 1rem;
             background-color: #0078ff;
@@ -21,88 +18,18 @@
             padding: 0.5rem;
         }
     </style>
+    @endpush
+
     @push('scripts')
     <script type="text/javascript">
-        $(document).ready(function () {
-            $(".add").click(function () {
-                var html = $(".copy").html();
-                $(".after").before(html);
+        $(document).ready(function(){
+
+            var multipleCancelButton = new Choices('#choices-multiple-remove-button', {
+                removeItemButton: true,
             });
 
-            $(".add_deskripsi").click(function () {
-                var html = $(".copy_deskripsi").html();
-                $(".content").before(html);
-            });
-
-            $(".add_image").click(function () {
-                var html = $(".copy_image").html();
-                $(".content").before(html);
-            });
-
-            $(".add_video").click(function () {
-                var html = $(".copy_video").html();
-                $(".content").before(html);
-            });
-
-            $(".add_heading").click(function () {
-                var html = $(".copy_heading").html();
-                $(".content").before(html);
-            });
-
-            $(".add_link").click(function () {
-                var html = $(".copy_link").html();
-                $(".content").before(html);
-            });
-
-            $(".add_audio").click(function () {
-                var html = $(".copy_audio").html();
-                $(".content").before(html);
-            });
-
-            $("body").on("click", ".remove", function () {
-                $(this).parents(".controll").remove();
-            });
-
-            $('select').on('change', function (e) {
-                var data = $('select').select2("val");
-                @this.set('tag', data);
-            });
-
-
-
-            // $('#autoresizing').on('input', function () {
-            //     this.style.height = 'auto';
-
-            //     this.style.height =
-            //             (this.scrollHeight) + 'px';
-            // });
-
-            // document.getElementById("deskripsi").addEventListener("keyup", myFunction);
-
-            // function myFunction() {
-            //     console.log('cek');
-            //     this.style.height = 'auto';
-
-            //     this.style.height = (this.scrollHeight) + 'px';
-            // }
 
         });
-
-        // function readURL(input) {
-        //     if (input.files && input.files[0]) {
-        //         var reader = new FileReader();
-
-        //         reader.onload = function (e) {
-        //             $('#blah').attr('src', e.target.result);
-        //             document.getElementById('blah').style.display = 'block';
-        //         };
-
-        //         reader.readAsDataURL(input.files[0]);
-        //     }
-        // }
-
-
-
     </script>
     @endpush
     <div class="row justify-content-center" style="margin-top: 100px !important;">
@@ -112,14 +39,14 @@
 
                 <div class="row">
                     <div class="col-6">
-                        <h1>Dashboard</h1>
+                        <h1>Postingan</h1>
                     </div>
                     <div class="col-6">
                         <nav aria-label="breadcrumb mt-2">
                             <ol class="breadcrumb"
                                 style="background-color: #f8fafc !important; float: right !important;">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Library</li>
+                                <li class="breadcrumb-item active" aria-current="page">Postingan</li>
                             </ol>
                         </nav>
                     </div>
@@ -133,20 +60,28 @@
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Judul Postingan</label>
                                 <input type="text" class="form-control" placeholder="judul postingan" wire:model.defer="title">
+                                @error('title') <span class="text-danger">{{ $message }}</span>@enderror
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Tag Postingan</label>
-                                <div wire:ignore>
-                                    <select class="col-12" id="select" multiple wire:model.defer="tag">
-                                        @foreach ($tags as $item)
-                                        <option value="{{$item->id}}">{{$item->name_tag}}</option>
-                                        @endforeach
-                                    </select>
+                                <div class="row">
+                                    <div class="col-11">
+                                        <div wire:ignore>
+                                            <select class="col-12" id="select" name="tagId" multiple wire:model.defer="tagId">
+                                                @foreach ($tags as $item)
+                                                <option value="{{$item->id}}">{{$item->name_tag}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-1">
+                                        <button type="button" class="btn bg-index text-light">Tambah</button>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Tambah Tag</label>
                                 <div class="row">
                                     <div class="col-auto">
@@ -156,11 +91,17 @@
                                         <button type="button" class="btn bg-index text-light">Tambah</button>
                                     </div>
                                 </div>
+                            </div> --}}
+
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Meta Deskripsi</label>
+                                <textarea id="autoresizing" class="form-control" placeholder="Ketik text disini" maxlength="200" wire:model.defer="metaDesc"></textarea>
+                                @error('metaDesc') <span class="text-danger">{{ $message }}</span>@enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Foto Thumbnail</label>
-                                <input class="form-control" onchange="readURL(this);" type="file" wire:model.defer="foto">
+                                <input class="form-control" onchange="readURL(this);" accept="image/*" type="file" wire:model.defer="foto">
                                 <img id="blah" src="" class="img-thumbnail mx-auto d-block" style="height: 200px !important; border: none; display: none !important;" alt="">
                             </div>
 
@@ -212,9 +153,9 @@
                                         <div style="width: 20%;">
                                             <a class="btn add_video" wire:click.prevent="add('Video')"><i class="fab fa-youtube fa-2x"></i><br>Video</a>
                                         </div>
-                                        {{-- <div style="width: 20%;">
-                                            <a class="btn add_audio" wire:click.prevent="add('Audio')"><i class="fas fa-music fa-2x"></i><br>Sound</a>
-                                        </div> --}}
+                                        <div style="width: 20%;">
+                                            <a class="btn add_audio" wire:click.prevent="add('List')"><i class="fas fa-list fa-2x"></i><br>List</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -22,6 +22,8 @@ class CreatePostsTable extends Migration
             $table->integer('click_view');
             $table->tinyInteger('priority')->default(0);
             $table->string('status');
+            $table->string('meta_desc');
+            $table->string('meta_keys');
             $table->tinyInteger('flag_aktif')->default(1);
             $table->timestamps();
         });
